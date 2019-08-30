@@ -16,17 +16,21 @@ export class HomeComponent implements OnInit {
     this.getValues();
   }
 
-  registerToggle(): void {
-    this.registerMode = !this.registerMode;
+  register(): void {
+    this.registerMode = true;
   }
 
-  getValues() {
+  getValues(): void {
     this.http.get('http://localhost:5000/api/values')
       .subscribe(response => {
         this.values = response;
       }, error => {
         console.log(error);
       });
+  }
+
+  cancelRegisterMode(registerMode: boolean): void {
+    this.registerMode = registerMode;
   }
 
 }
