@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -27,5 +27,4 @@ export class RegisterComponent implements OnInit {
   cancel(): void {
     this.cancelRegister.emit(false);
   }
-
 }
