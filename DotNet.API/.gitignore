@@ -1,0 +1,6 @@
+bin
+obj
+*.db
+Debug/
+Release/
+appsettings.json
