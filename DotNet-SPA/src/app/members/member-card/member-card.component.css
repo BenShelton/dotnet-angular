@@ -1,0 +1,13 @@
+.card-img-wrapper {
+  overflow: hidden;
+}
+
+.card img {
+  transition-duration: 500ms;
+  transition-timing-function: ease-out;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+  opacity: 0.7;
+}
