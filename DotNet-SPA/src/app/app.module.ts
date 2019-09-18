@@ -20,6 +20,10 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 
 import { AuthService } from './services/auth.service';
 import { ErrorInterceptorProvider } from './services/error.interceptor';
+import { AlertifyService } from './services/alertify.service';
+import { AuthGuard } from './guards/auth.guard';
+import { PreventUnsavedChanges } from './guards/prevent-unsaved-changes.guard';
+import { UserService } from './services/user.service';
 import { MemberDetailsResolver } from './resolvers/member-detail.resolver';
 import { MemberListResolver } from './resolvers/member-list.resolver';
 import { MemberEditResolver } from './resolvers/member-edit.resolver';
@@ -70,6 +74,10 @@ class CustomHammerConfig extends HammerGestureConfig {
    providers: [
       AuthService,
       ErrorInterceptorProvider,
+      AlertifyService,
+      AuthGuard,
+      PreventUnsavedChanges,
+      UserService,
       MemberDetailsResolver,
       MemberListResolver,
       MemberEditResolver,
