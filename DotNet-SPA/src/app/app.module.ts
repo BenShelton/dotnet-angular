@@ -27,6 +27,7 @@ import { UserService } from './services/user.service';
 import { MemberDetailsResolver } from './resolvers/member-detail.resolver';
 import { MemberListResolver } from './resolvers/member-list.resolver';
 import { MemberEditResolver } from './resolvers/member-edit.resolver';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 
 import { appRoutes } from './routes';
 
@@ -53,7 +54,8 @@ class CustomHammerConfig extends HammerGestureConfig {
       MessagesComponent,
       MemberCardComponent,
       MemberDetailComponent,
-      MemberEditComponent
+      MemberEditComponent,
+      PhotoEditorComponent
    ],
    imports: [
       BrowserModule,
