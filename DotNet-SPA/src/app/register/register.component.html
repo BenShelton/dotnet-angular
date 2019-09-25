@@ -48,10 +48,12 @@
 
   <div class="form-group">
     <input
-      type="date"
+      type="text"
       class="form-control"
       placeholder="Date of Birth"
       formControlName="dateOfBirth"
+      bsDatepicker
+      [bsConfig]="bsConfig"
       [ngClass]="{ 'is-invalid': registerForm.get('dateOfBirth').errors && registerForm.get('dateOfBirth').touched }"
     >
     <div class="invalid-feedback">Date of Birth is required</div>
