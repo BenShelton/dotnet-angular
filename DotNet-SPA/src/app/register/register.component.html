@@ -8,7 +8,9 @@
       class="form-control"
       placeholder="Username"
       formControlName="username"
+      [ngClass]="{ 'is-invalid': registerForm.get('username').errors && registerForm.get('username').touched }"
     >
+    <div class="invalid-feedback">Please choose a username</div>
   </div>
 
   <div class="form-group">
@@ -17,7 +19,26 @@
       class="form-control"
       placeholder="Password"
       formControlName="password"
+      [ngClass]="{ 'is-invalid': registerForm.get('password').errors && registerForm.get('password').touched }"
     >
+    <div
+      class="invalid-feedback"
+      *ngIf="registerForm.get('password').hasError('required')"
+    >
+      Password is required
+    </div>
+    <div
+      class="invalid-feedback"
+      *ngIf="registerForm.get('password').hasError('minlength')"
+    >
+      Password must be at least 4 characters
+    </div>
+    <div
+      class="invalid-feedback"
+      *ngIf="registerForm.get('password').hasError('maxlength')"
+    >
+      Password cannot exceed 8 characters
+    </div>
   </div>
 
   <div class="form-group">
@@ -26,7 +47,20 @@
       class="form-control"
       placeholder="Confirm Password"
       formControlName="confirmPassword"
+      [ngClass]="{ 'is-invalid': registerForm.get('confirmPassword').touched && (registerForm.get('confirmPassword').errors || registerForm.hasError('mismatch')) }"
     >
+    <div
+      class="invalid-feedback"
+      *ngIf="registerForm.get('confirmPassword').hasError('required')"
+    >
+      Password is required
+    </div>
+    <div
+      class="invalid-feedback"
+      *ngIf="registerForm.hasError('mismatch')"
+    >
+      Passwords much match
+    </div>
   </div>
 
   <div class="form-group text-center">
@@ -34,6 +68,3 @@
     <button class="btn btn-default" type="button" (click)="cancel()">Cancel</button>
   </div>
 </form>
-
-<p>Form value: {{ registerForm.value | json }}</p>
-<p>Form status: {{ registerForm.status | json }}</p>
