@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,8 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
   decodedToken: any;
   currentUser: User;
+  photoUrl = new BehaviorSubject<string>('../../assets/user.png');
+  currentPhotoUrl = this.photoUrl.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -26,10 +29,12 @@ export class AuthService {
     }
     if (user) {
       this.currentUser = JSON.parse(user);
+      this.photoUrl.next(this.currentUser.photoUrl);
     }
   }
 
   unloadTokens() {
+    this.photoUrl.next('../../assets/user.png');
     localStorage.removeItem(this.tokenPath);
     localStorage.removeItem(this.userPath);
     this.decodedToken = null;
@@ -45,6 +50,7 @@ export class AuthService {
             localStorage.setItem(this.userPath, JSON.stringify(response.user));
             this.decodedToken = this.jwtHelper.decodeToken(response.token);
             this.currentUser = response.user;
+            this.changeMemberPhoto(this.currentUser.photoUrl);
           }
         })
       );
@@ -57,5 +63,11 @@ export class AuthService {
   loggedIn() {
     const token = localStorage.getItem(this.tokenPath);
     return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  changeMemberPhoto(photoUrl: string) {
+    this.photoUrl.next(photoUrl);
+    this.currentUser.photoUrl = photoUrl;
+    localStorage.setItem(this.userPath, JSON.stringify(this.currentUser));
   }
 }

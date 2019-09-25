@@ -11,10 +11,12 @@ import { AlertifyService } from '../services/alertify.service';
 })
 export class NavComponent implements OnInit {
   model: any = {};
+  photoUrl: string;
 
   constructor(private router: Router, public authService: AuthService, private alertify: AlertifyService) { }
 
   ngOnInit() {
+    this.authService.currentPhotoUrl.subscribe(photoUrl => { this.photoUrl = photoUrl; });
   }
 
   login(): void {

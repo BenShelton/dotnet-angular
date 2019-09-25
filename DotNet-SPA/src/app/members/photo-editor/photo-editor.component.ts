@@ -13,7 +13,6 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 })
 export class PhotoEditorComponent implements OnInit {
   @Input() photos: Photo[];
-  @Output() getMemberPhotoChange = new EventEmitter<string>();
   uploader: FileUploader;
   hasDropZoneOver = false;
   baseUrl = environment.apiUrl;
@@ -66,7 +65,7 @@ export class PhotoEditorComponent implements OnInit {
       .subscribe(() => {
         this.photos.find(p => p.isMain).isMain = false;
         photo.isMain = true;
-        this.getMemberPhotoChange.emit(photo.url);
+        this.authService.changeMemberPhoto(photo.url);
       }, error => {
         this.alertify.error(error);
       });
