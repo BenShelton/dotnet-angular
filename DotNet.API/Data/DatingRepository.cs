@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,11 +45,15 @@ namespace DotNet.API.Data
 
     public async Task<PagedList<User>> GetUsers(UserParams userParams)
     {
+      var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
+      var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
+
       var users = _context.Users
         .Include(p => p.Photos)
         .AsQueryable()
         .Where(u => u.Id != userParams.UserId)
-        .Where(u => u.Gender == userParams.Gender);
+        .Where(u => u.Gender == userParams.Gender)
+        .Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
 
       return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
     }
