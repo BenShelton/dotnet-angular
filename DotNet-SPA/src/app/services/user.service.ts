@@ -83,7 +83,7 @@ export class UserService {
       .append('pageSize', String(itemsPerPage))
       .append('MessageContainer', messageContainer);
 
-    return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages', { observe: 'response', params })
+    return this.http.get<Message[]>(this.baseUrl + id + '/messages', { observe: 'response', params })
       .pipe(
         map(response => {
           paginatedResult.result = response.body;
