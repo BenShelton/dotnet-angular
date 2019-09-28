@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
 import { PaginatedResult } from '../models/pagination';
 import { map } from 'rxjs/operators';
+import { Message } from '../models/message';
 
 @Injectable({
   providedIn: 'root'
@@ -67,5 +68,31 @@ export class UserService {
 
   sendLike(id: number, recipientId: number) {
     return this.http.post(this.baseUrl + id + '/like/' + recipientId, {});
+  }
+
+  getMessages(
+    id: number,
+    page: number,
+    itemsPerPage: number,
+    messageContainer: 'Inbox' | 'Outbox' | 'Unread'
+  ) {
+    const paginatedResult: PaginatedResult<Message[]> = new PaginatedResult<Message[]>();
+
+    const params = new HttpParams()
+      .append('pageNumber', String(page))
+      .append('pageSize', String(itemsPerPage))
+      .append('MessageContainer', messageContainer);
+
+    return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages', { observe: 'response', params })
+      .pipe(
+        map(response => {
+          paginatedResult.result = response.body;
+          const paginatedHeaders = response.headers.get('Pagination');
+          if (paginatedHeaders) {
+            paginatedResult.pagination = JSON.parse(paginatedHeaders);
+          }
+          return paginatedResult;
+        })
+      );
   }
 }
