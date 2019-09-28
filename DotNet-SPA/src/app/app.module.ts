@@ -37,12 +37,12 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
 
 import { appRoutes } from './routes';
 
-function tokenGetter() {
+export function tokenGetter() {
   return localStorage.getItem('token');
 }
 
 // workaround for ngx-gallery error
-class CustomHammerConfig extends HammerGestureConfig {
+export class CustomHammerConfig extends HammerGestureConfig {
   overrides = {
     pinch: { enable: false },
     rotate: { enable: false }
