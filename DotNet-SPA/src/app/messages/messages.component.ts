@@ -45,6 +45,19 @@ export class MessagesComponent implements OnInit {
       });
   }
 
+  deleteMessage($event: MouseEvent, messageId: number) {
+    $event.stopPropagation();
+    this.alertify.confirm('Are you sre you want to delete this message?', () => {
+      this.userService.deleteMessage(this.authService.decodedToken.nameid, messageId)
+        .subscribe(() => {
+          this.messages.splice(this.messages.findIndex(m => m.id === messageId), 1);
+          this.alertify.success('Message has been deleted');
+        }, error => {
+          this.alertify.error(error);
+        });
+    });
+  }
+
   pageChanged(event: any): void {
     this.pagination.currentPage = event.page;
     this.loadMessages();
