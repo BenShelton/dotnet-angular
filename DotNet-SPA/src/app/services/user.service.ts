@@ -18,16 +18,23 @@ export class UserService {
   getUsers(
     page: number,
     itemsPerPage: number,
-    userParams = { minAge: 18, maxAge: 99, gender: '', orderBy: 'lastActive' }
+    userParams = { minAge: 18, maxAge: 99, gender: '', orderBy: 'lastActive' },
+    likesParam?: 'Likers' | 'Likees'
   ): Observable<PaginatedResult<User[]>> {
     const paginatedResult = new PaginatedResult<User[]>();
-    const params = new HttpParams()
+    let params: HttpParams = new HttpParams()
       .append('pageNumber', String(page))
       .append('pageSize', String(itemsPerPage))
       .append('minAge', String(userParams.minAge))
       .append('maxAge', String(userParams.maxAge))
       .append('gender', userParams.gender)
       .append('orderBy', userParams.orderBy);
+
+    if (likesParam === 'Likers') {
+      params = params.append('likers', 'true');
+    } else if (likesParam === 'Likees') {
+      params = params.append('likees', 'true');
+    }
 
     return this.http.get<User[]>(this.baseUrl, { observe: 'response', params })
       .pipe(
