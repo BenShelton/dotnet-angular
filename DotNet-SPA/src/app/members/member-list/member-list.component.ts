@@ -38,7 +38,7 @@ export class MemberListComponent implements OnInit {
     this.loadUsers();
   }
 
-  resetFilters (): void {
+  resetFilters(): void {
     this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
     this.userParams.minAge = 18;
     this.userParams.maxAge = 99;
@@ -52,6 +52,6 @@ export class MemberListComponent implements OnInit {
         this.pagination = res.pagination;
       }, error => {
         this.alertify.error(error);
-      })
+      });
   }
 }

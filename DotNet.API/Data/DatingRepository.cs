@@ -50,10 +50,21 @@ namespace DotNet.API.Data
 
       var users = _context.Users
         .Include(p => p.Photos)
+        .OrderByDescending(u => u.LastActive)
         .AsQueryable()
         .Where(u => u.Id != userParams.UserId)
         .Where(u => u.Gender == userParams.Gender)
         .Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
+
+      if (!string.IsNullOrEmpty(userParams.OrderBy))
+      {
+        switch (userParams.OrderBy)
+        {
+          case "created":
+            users = users.OrderByDescending(u => u.Created);
+            break;
+        }
+      }
 
       return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
     }
