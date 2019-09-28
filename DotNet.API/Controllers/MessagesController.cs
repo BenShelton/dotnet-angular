@@ -57,7 +57,7 @@ namespace DotNet.API.Controllers
         return Ok(messages);
     }
 
-    [HttpGet("/thread/{recipientId}")]
+    [HttpGet("thread/{recipientId}")]
     public async Task<IActionResult> GetMessageThread(int userId, int recipientId)
     {
         if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
