@@ -44,7 +44,12 @@ namespace DotNet.API.Data
 
     public async Task<PagedList<User>> GetUsers(UserParams userParams)
     {
-      var users = _context.Users.Include(p => p.Photos);
+      var users = _context.Users
+        .Include(p => p.Photos)
+        .AsQueryable()
+        .Where(u => u.Id != userParams.UserId)
+        .Where(u => u.Gender == userParams.Gender);
+
       return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
     }
 
