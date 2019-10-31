@@ -21,6 +21,7 @@ import { MemberCardComponent } from './members/member-card/member-card.component
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 
 import { AuthService } from './services/auth.service';
 import { ErrorInterceptorProvider } from './services/error.interceptor';
@@ -63,6 +64,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
       MemberEditComponent,
       MemberMessagesComponent,
       PhotoEditorComponent,
+      AdminPanelComponent,
       TimeAgoPipe
    ],
    imports: [
