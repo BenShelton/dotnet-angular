@@ -22,10 +22,13 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 
 import { AuthService } from './services/auth.service';
 import { ErrorInterceptorProvider } from './services/error.interceptor';
 import { AlertifyService } from './services/alertify.service';
+import { AdminService } from './services/admin.service';
 import { AuthGuard } from './guards/auth.guard';
 import { PreventUnsavedChanges } from './guards/prevent-unsaved-changes.guard';
 import { UserService } from './services/user.service';
@@ -66,6 +69,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
       MemberMessagesComponent,
       PhotoEditorComponent,
       AdminPanelComponent,
+      UserManagementComponent,
+      PhotoManagementComponent,
       HasRoleDirective,
       TimeAgoPipe
    ],
@@ -95,6 +100,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
       AuthService,
       ErrorInterceptorProvider,
       AlertifyService,
+      AdminService,
       AuthGuard,
       PreventUnsavedChanges,
       UserService,
