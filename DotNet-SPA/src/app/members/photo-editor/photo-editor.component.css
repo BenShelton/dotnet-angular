@@ -11,3 +11,20 @@ img.img-thumbnail {
 input[type=file] {
   color: transparent;
 }
+
+.unapproved img {
+  position: relative;
+  opacity: 0.3;
+}
+
+.unapproved:before {
+  content: 'UNAPPROVED';
+  color: red;
+  position: absolute;
+  font-size: 13px;
+  font-weight: bold;
+  top: 20px;
+  left: 15px;
+  width: 100px;
+  text-align: center;
+}

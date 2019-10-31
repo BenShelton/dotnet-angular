@@ -8,6 +8,7 @@ using DotNet.API.Data;
 using DotNet.API.Dtos;
 using DotNet.API.Helpers;
 using DotNet.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -78,9 +79,6 @@ namespace DotNet.API.Controllers
 
         var photo = _mapper.Map<Photo>(photoForCreationDto);
 
-        if (!userFromRepo.Photos.Any(u => u.IsMain))
-            photo.IsMain = true;
-
         userFromRepo.Photos.Add(photo);
 
         if (await _repo.SaveAll())
@@ -109,7 +107,8 @@ namespace DotNet.API.Controllers
             return BadRequest("This is already the main photo");
 
         var currentMainPhoto = await _repo.GetMainPhotoForUser(userId);
-        currentMainPhoto.IsMain = false;
+        if (currentMainPhoto != null)
+            currentMainPhoto.IsMain = false;
 
         photoFromRepo.IsMain = true;
 
@@ -117,6 +116,27 @@ namespace DotNet.API.Controllers
             return NoContent();
 
         return BadRequest("Could not set photo to main");
+    }
+
+    [Authorize(Policy = "ModeratePhotoRole")]
+    [HttpPost("{id}/authorise")]
+    public async Task<IActionResult> AuthorisePhoto(int id)
+    {
+        var photoFromRepo = await _repo.GetPhoto(id);
+
+        if (photoFromRepo.IsApproved)
+            return BadRequest("This photo has already been approved");
+
+        photoFromRepo.IsApproved = true;
+
+        var userFromRepo = await _repo.GetUser(photoFromRepo.UserId);
+        if (!userFromRepo.Photos.Any(u => u.IsMain))
+            photoFromRepo.IsMain = true;
+
+        if (await _repo.SaveAll())
+            return NoContent();
+
+        return BadRequest("Could not approve photo");
     }
 
     [HttpDelete("{id}")]
@@ -131,9 +151,6 @@ namespace DotNet.API.Controllers
             return Unauthorized();
 
         var photoFromRepo = await _repo.GetPhoto(id);
-
-        if (photoFromRepo.IsMain)
-            return BadRequest("You cannot delete your main photo");
 
         if (photoFromRepo.PublicId != null)
         {
