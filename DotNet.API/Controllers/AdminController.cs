@@ -87,12 +87,21 @@ namespace DotNet.API.Controllers
     [HttpGet("photosForModeration")]
     public async Task<IActionResult> GetPhotosForModeration()
     {
-      var photosForModeration = await _context.Photos
+      var photos = await _context.Photos
+        .Include(u => u.User)
+        .IgnoreQueryFilters()
         .Where(p => !p.IsApproved)
         .OrderBy(p => p.DateAdded)
+        .Select(u => new
+        {
+          Id = u.Id,
+          UserName = u.User.UserName,
+          Url = u.Url,
+          IsApproved = u.IsApproved
+        })
         .ToListAsync();
 
-      return Ok(photosForModeration);
+      return Ok(photos);
     }
 
     [Authorize(Policy = "ModeratePhotoRole")]
