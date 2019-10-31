@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap';
 import { User } from 'src/app/models/user';
 
@@ -10,9 +10,15 @@ import { User } from 'src/app/models/user';
 export class RolesModalComponent implements OnInit {
   user: User;
   roles: { name: string; value: string; checked: boolean }[];
+  @Output() updateSelectedRoles = new EventEmitter();
 
   constructor(public bsModalRef: BsModalRef) {}
 
   ngOnInit() {
+  }
+
+  updateRoles() {
+    this.updateSelectedRoles.emit(this.roles);
+    this.bsModalRef.hide();
   }
 }
