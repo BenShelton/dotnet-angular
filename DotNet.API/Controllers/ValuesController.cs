@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using DotNet.API.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotNet.API.Controllers
 {
-  [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class ValuesController : ControllerBase

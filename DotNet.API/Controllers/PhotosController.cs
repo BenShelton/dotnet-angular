@@ -8,13 +8,11 @@ using DotNet.API.Data;
 using DotNet.API.Dtos;
 using DotNet.API.Helpers;
 using DotNet.API.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace DotNet.API.Controllers
 {
-  [Authorize]
   [Route("api/users/{userId}/photos")]
   [ApiController]
   public class PhotosController : ControllerBase
