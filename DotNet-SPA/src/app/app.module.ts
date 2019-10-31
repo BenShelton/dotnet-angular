@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
-import { BsDropdownModule, TabsModule, BsDatepickerModule, PaginationModule, ButtonsModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule, BsDatepickerModule, PaginationModule, ButtonsModule, ModalModule } from 'ngx-bootstrap';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
 import { TimeAgoPipe } from 'time-ago-pipe';
@@ -24,6 +24,7 @@ import { MemberMessagesComponent } from './members/member-messages/member-messag
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
+import { RolesModalComponent } from './admin/roles-modal/roles-modal.component';
 
 import { AuthService } from './services/auth.service';
 import { ErrorInterceptorProvider } from './services/error.interceptor';
@@ -71,6 +72,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
       AdminPanelComponent,
       UserManagementComponent,
       PhotoManagementComponent,
+      RolesModalComponent,
       HasRoleDirective,
       TimeAgoPipe
    ],
@@ -85,6 +87,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
       BsDatepickerModule.forRoot(),
       PaginationModule.forRoot(),
       ButtonsModule.forRoot(),
+      ModalModule.forRoot(),
       RouterModule.forRoot(appRoutes),
       NgxGalleryModule,
       FileUploadModule,
@@ -110,6 +113,9 @@ export class CustomHammerConfig extends HammerGestureConfig {
       ListsResolver,
       MessagesResolver,
       { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
+   ],
+   entryComponents: [
+    RolesModalComponent
    ],
    bootstrap: [
       AppComponent
