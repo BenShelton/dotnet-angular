@@ -35,6 +35,7 @@ import { MemberEditResolver } from './resolvers/member-edit.resolver';
 import { ListsResolver } from './resolvers/lists.resolver';
 import { MessagesResolver } from './resolvers/messages.resolver';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { HasRoleDirective } from './directives/has-role.directive';
 
 import { appRoutes } from './routes';
 
@@ -65,6 +66,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
       MemberMessagesComponent,
       PhotoEditorComponent,
       AdminPanelComponent,
+      HasRoleDirective,
       TimeAgoPipe
    ],
    imports: [
