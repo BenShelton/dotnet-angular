@@ -65,6 +65,16 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
+  roleMatch(allowedRoles: string[]): boolean {
+    const userRoles: string[] = this.decodedToken.role;
+    for (const element of allowedRoles) {
+      if (userRoles.includes(element)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   changeMemberPhoto(photoUrl: string) {
     this.photoUrl.next(photoUrl);
     this.currentUser.photoUrl = photoUrl;
