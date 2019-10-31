@@ -11,7 +11,10 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 export class PhotoManagementComponent implements OnInit {
   photos: Photo[];
 
-  constructor(private adminService: AdminService, private alertify: AlertifyService) { }
+  constructor(
+    private adminService: AdminService,
+    private alertify: AlertifyService
+  ) { }
 
   ngOnInit() {
     this.adminService.getUnapprovedPhotos().subscribe((photos: Photo[]) => {
@@ -22,10 +25,24 @@ export class PhotoManagementComponent implements OnInit {
   }
 
   approvePhoto(id: number) {
-
+    this.adminService.approvePhoto(id).subscribe(() => {
+      this.removePhoto(id);
+      this.alertify.success('Photo was approved');
+    }, error => {
+      this.alertify.error(error);
+    });
   }
 
   declinePhoto(id: number) {
+    this.adminService.declinePhoto(id).subscribe(() => {
+      this.removePhoto(id);
+      this.alertify.success('Photo was declined');
+    }, error => {
+      this.alertify.error(error);
+    });
+  }
 
+  removePhoto(id: number) {
+    this.photos.splice(this.photos.findIndex(p => p.id === id), 1);
   }
 }

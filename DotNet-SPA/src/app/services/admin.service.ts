@@ -22,4 +22,12 @@ export class AdminService {
   getUnapprovedPhotos() {
     return this.http.get(this.baseUrl + 'photosForModeration');
   }
+
+  approvePhoto(id: number) {
+    return this.http.post(this.baseUrl + 'photos/' + id + '/approve', {});
+  }
+
+  declinePhoto(id: number) {
+    return this.http.post(this.baseUrl  + 'photos/' + id + '/decline', {});
+  }
 }
